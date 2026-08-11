@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sports-eval-core:schema:weekly-input:1",
+  "title": "Sports Eval Core weekly input",
+  "type": "object",
+  "required": ["schema_version", "week"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "synthetic": {"type": "boolean"},
+    "week": {
+      "type": "object",
+      "required": ["mon", "sun", "as_of"],
+      "properties": {
+        "mon": {"type": "string", "pattern": "^[0-9]{8}$"},
+        "sun": {"type": "string", "pattern": "^[0-9]{8}$"},
+        "as_of": {"type": "string", "pattern": "^[0-9]{8}$"},
+        "partial": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "daily": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["date"],
+        "properties": {
+          "date": {"type": "string", "pattern": "^[0-9]{8}$"},
+          "sleep_duration_min": {"type": "number", "minimum": 0},
+          "sleep_score": {"type": "number"},
+          "resting_hr": {"type": "number", "minimum": 0},
+          "subjective_recovery": {"type": "number"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "activities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["date", "duration_s"],
+        "properties": {
+          "date": {"type": "string", "pattern": "^[0-9]{8}$"},
+          "type": {"type": "string"},
+          "distance_m": {"type": "number", "minimum": 0},
+          "duration_s": {"type": "number", "minimum": 0},
+          "avg_hr": {"type": "number", "minimum": 0},
+          "hr_zone_minutes": {
+            "type": "array",
+            "minItems": 5,
+            "maxItems": 5,
+            "items": {"type": "number", "minimum": 0}
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "sleep_intervals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["start", "end"],
+        "properties": {
+          "start": {"type": "string", "format": "date-time"},
+          "end": {"type": "string", "format": "date-time"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "load_history": {
+      "type": "object",
+      "patternProperties": {"^[0-9]{8}$": {"type": "number", "minimum": 0}},
+      "additionalProperties": false
+    },
+    "current_week_daily_loads": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {"type": "number", "minimum": 0}
+    }
+  },
+  "additionalProperties": false
+}

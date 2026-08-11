@@ -1,0 +1,41 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.har
+*token*
+*cookie*
+
+# Real wearable and location data must never enter the public repository
+private/
+data/
+**/原始数据/
+**/个人档案.md
+**/解析索引.json
+*.fit
+*.tcx
+*.gpx
+
+# Generated reports (keep README placeholders)
+06_周报告/周报告_*.md
+
+# Python / JavaScript artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+node_modules/
+coverage.xml
+.coverage
+
+# Obsidian per-user state
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.trash/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+

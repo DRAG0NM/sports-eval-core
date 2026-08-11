@@ -1,0 +1,10 @@
+Sports Eval Core
+Copyright 2026 Sports Eval Core contributors
+
+This distribution contains an Obsidian-oriented, local-first framework for
+personal exercise and recovery trend analysis.
+
+The core runtime uses only the Python standard library. Scientific method names
+and formulas remain attributable to their original authors and publications;
+their inclusion does not imply endorsement, clinical validation, or ownership.
+
