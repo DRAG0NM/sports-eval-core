@@ -7,22 +7,54 @@
     "as_of": "20260811",
     "partial": true
   },
+  "history_daily": [
+    {"date":"20260727","sleep_duration_min":421,"sleep_score":79,"sleep_efficiency":93,"hrv_rmssd":42,"resting_hr":52,"stress":31,"training_load":25,"vo2max":47.1,"running_ability":45.8},
+    {"date":"20260728","sleep_duration_min":438,"sleep_score":81,"sleep_efficiency":94,"hrv_rmssd":44,"resting_hr":51,"stress":29,"training_load":0,"vo2max":47.1,"running_ability":45.8},
+    {"date":"20260729","sleep_duration_min":405,"sleep_score":77,"sleep_efficiency":91,"hrv_rmssd":40,"resting_hr":53,"stress":34,"training_load":48,"vo2max":47.0,"running_ability":45.7},
+    {"date":"20260730","sleep_duration_min":449,"sleep_score":83,"sleep_efficiency":95,"hrv_rmssd":45,"resting_hr":50,"stress":27,"training_load":0,"vo2max":47.2,"running_ability":45.9},
+    {"date":"20260731","sleep_duration_min":432,"sleep_score":80,"sleep_efficiency":93,"hrv_rmssd":43,"resting_hr":51,"stress":30,"training_load":34,"vo2max":47.2,"running_ability":45.9},
+    {"date":"20260801","sleep_duration_min":458,"sleep_score":85,"sleep_efficiency":96,"hrv_rmssd":47,"resting_hr":49,"stress":25,"training_load":0,"vo2max":47.3,"running_ability":46.0},
+    {"date":"20260802","sleep_duration_min":416,"sleep_score":78,"sleep_efficiency":92,"hrv_rmssd":41,"resting_hr":52,"stress":33,"training_load":50,"vo2max":47.2,"running_ability":45.9},
+    {"date":"20260803","sleep_duration_min":440,"sleep_score":82,"sleep_efficiency":94,"hrv_rmssd":44,"resting_hr":51,"stress":28,"training_load":0,"vo2max":47.3,"running_ability":46.0},
+    {"date":"20260804","sleep_duration_min":426,"sleep_score":80,"sleep_efficiency":93,"hrv_rmssd":43,"resting_hr":51,"stress":30,"training_load":65,"vo2max":47.4,"running_ability":46.1},
+    {"date":"20260805","sleep_duration_min":451,"sleep_score":84,"sleep_efficiency":95,"hrv_rmssd":46,"resting_hr":50,"stress":26,"training_load":0,"vo2max":47.4,"running_ability":46.1},
+    {"date":"20260806","sleep_duration_min":419,"sleep_score":79,"sleep_efficiency":92,"hrv_rmssd":42,"resting_hr":52,"stress":32,"training_load":0,"vo2max":47.3,"running_ability":46.0},
+    {"date":"20260807","sleep_duration_min":443,"sleep_score":82,"sleep_efficiency":94,"hrv_rmssd":45,"resting_hr":50,"stress":28,"training_load":35,"vo2max":47.5,"running_ability":46.2},
+    {"date":"20260808","sleep_duration_min":430,"sleep_score":81,"sleep_efficiency":93,"hrv_rmssd":43,"resting_hr":51,"stress":29,"training_load":0,"vo2max":47.5,"running_ability":46.2},
+    {"date":"20260809","sleep_duration_min":447,"sleep_score":83,"sleep_efficiency":95,"hrv_rmssd":46,"resting_hr":50,"stress":27,"training_load":0,"vo2max":47.6,"running_ability":46.3}
+  ],
   "daily": [
     {
       "date": "20260810",
       "sleep_duration_min": 425,
       "sleep_score": 79,
+      "sleep_efficiency": 93,
+      "hrv_rmssd": 43,
       "resting_hr": 51,
+      "stress": 29,
+      "training_load": 60,
+      "vo2max": 47.6,
+      "running_ability": 46.3,
       "subjective_recovery": 6
     },
     {
       "date": "20260811",
       "sleep_duration_min": 455,
       "sleep_score": 84,
+      "sleep_efficiency": 95,
+      "hrv_rmssd": 46,
       "resting_hr": 49,
+      "stress": 26,
+      "training_load": 0,
+      "vo2max": 47.7,
+      "running_ability": 46.4,
       "subjective_recovery": 7
     }
   ],
+  "subjective_events": [
+    {"date":"20260811","type":"morning_checkin","pain":0,"illness":false,"subjective_recovery":4}
+  ],
+  "current_plan": "本周两次轻松跑和一次力量练习；任何改动需本人确认。",
   "activities": [
     {
       "date": "20260810",
@@ -50,4 +82,3 @@
     "20260810": 60
   }
 }
-

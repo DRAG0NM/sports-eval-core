@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sports-eval-core:schema:coach-response:2",
+  "title": "Evidence-bound coach response v2",
+  "type": "object",
+  "required": [
+    "kind", "schema_version", "task", "as_of", "data_status",
+    "observations", "recommendations", "risks", "questions", "limitations"
+  ],
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "required": ["source", "pointer", "layer"],
+      "properties": {
+        "source": {"const": "coach_context"},
+        "pointer": {"type": "string", "pattern": "^/"},
+        "layer": {
+          "enum": ["raw_signal", "deterministic_metric", "experimental_model", "user_event", "plan"]
+        },
+        "observed_value": {}
+      }
+    },
+    "observation": {
+      "type": "object",
+      "required": ["id", "statement", "confidence", "evidence"],
+      "properties": {
+        "id": {"type": "string"},
+        "statement": {"type": "string"},
+        "confidence": {"enum": ["high", "medium", "low"]},
+        "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence"}}
+      }
+    },
+    "recommendation": {
+      "type": "object",
+      "required": [
+        "id", "action_type", "action", "confidence", "evidence",
+        "requires_confirmation", "changes_plan"
+      ],
+      "properties": {
+        "id": {"type": "string"},
+        "action_type": {"type": "string"},
+        "action": {"type": "string"},
+        "confidence": {"enum": ["high", "medium", "low"]},
+        "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence"}},
+        "requires_confirmation": {"type": "boolean"},
+        "changes_plan": {"type": "boolean"}
+      }
+    },
+    "risk": {
+      "type": "object",
+      "required": ["level", "signal", "action"],
+      "properties": {
+        "level": {"enum": ["green", "yellow", "red"]},
+        "signal": {"type": "string"},
+        "action": {"type": "string"}
+      }
+    }
+  },
+  "properties": {
+    "kind": {"const": "coach_response"},
+    "synthetic": {"type": "boolean"},
+    "schema_version": {"const": 2},
+    "task": {"enum": ["daily_guidance", "post_workout", "weekly_review", "pain_followup"]},
+    "as_of": {"type": "string", "pattern": "^[0-9]{8}$"},
+    "data_status": {"type": "object"},
+    "observations": {"type": "array", "items": {"$ref": "#/$defs/observation"}},
+    "recommendations": {"type": "array", "items": {"$ref": "#/$defs/recommendation"}},
+    "risks": {"type": "array", "items": {"$ref": "#/$defs/risk"}},
+    "questions": {"type": "array", "items": {"type": "string"}},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}

@@ -36,8 +36,7 @@ class TestCoreMetrics(unittest.TestCase):
         self.assertIsNone(M.acwr({"20260810": 50}, "20260811"))
 
     def test_ewma_uses_distinct_time_constants(self):
-        loads = {"20260714": 20, "20260804": 50, "20260810": 80}
-        result = M.ewma_acwr(loads, "20260811")
+        result = M.ewma_acwr({"20260714": 20, "20260804": 50, "20260810": 80}, "20260811")
         self.assertEqual(result["acute_lambda"], 0.25)
         self.assertEqual(result["chronic_lambda"], 0.069)
 
@@ -55,8 +54,7 @@ class TestCoreMetrics(unittest.TestCase):
             {"start": "2026-08-10T00:10:00+08:00", "end": "2026-08-10T07:10:00+08:00"},
             {"start": "2026-08-10T23:55:00+08:00", "end": "2026-08-11T06:55:00+08:00"},
         ]
-        result = M.sleep_consistency(intervals)
-        self.assertLess(result["sleep_start_sd_min"], 15)
+        self.assertLess(M.sleep_consistency(intervals)["sleep_start_sd_min"], 15)
 
     def test_recovery_composite_renormalizes_missing_component(self):
         result = M.recovery_composite(0.8, 0.6, None)
@@ -66,4 +64,3 @@ class TestCoreMetrics(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

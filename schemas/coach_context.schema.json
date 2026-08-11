@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sports-eval-core:schema:coach-context:2",
+  "title": "Model-neutral coach context v2",
+  "type": "object",
+  "required": ["kind", "schema_version", "task", "as_of", "policy", "views", "recent_events", "safety_gate", "content_sha256", "context_metrics"],
+  "properties": {
+    "kind": {"const": "coach_context"},
+    "schema_version": {"const": 2},
+    "task": {"enum": ["daily_guidance", "post_workout", "weekly_review", "pain_followup"]},
+    "as_of": {"type": "string", "pattern": "^[0-9]{8}$"},
+    "query": {"type": "string"},
+    "policy": {"type": "object"},
+    "views": {"type": "object"},
+    "recent_events": {"type": "array"},
+    "safety_gate": {
+      "type": "object",
+      "required": ["level", "training_actions_blocked", "required_action_types"],
+      "properties": {"level": {"enum": ["green", "yellow", "red"]},
+                     "training_actions_blocked": {"type": "boolean"},
+                     "required_action_types": {"type": "array", "items": {"type": "string"}}}
+    },
+    "data_status": {"type": "object"},
+    "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "context_metrics": {
+      "type": "object",
+      "required": ["approx_tokens", "budget_tokens", "within_budget"],
+      "properties": {"approx_tokens": {"type": "integer", "minimum": 0},
+                     "budget_tokens": {"type": "integer", "minimum": 1},
+                     "within_budget": {"type": "boolean"}}
+    }
+  }
+}

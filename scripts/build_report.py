@@ -11,6 +11,7 @@ from datetime import datetime
 
 from core_metrics import (acwr, efficiency_factor, ewma_acwr, monotony_strain,
                           sleep_consistency, sleep_regularity_sri, trimp_edwards)
+from state_layers import multidomain_state, raw_signal_snapshot
 
 AUTO_BEGIN = "<!-- 自动报告开始 -->"
 AUTO_END = "<!-- 自动报告结束 -->"
@@ -57,6 +58,7 @@ def render_report(payload):
     partial = bool(week.get("partial") or week["as_of"] < week["sun"])
     activities = payload.get("activities", [])
     daily = payload.get("daily", [])
+    all_daily = list(payload.get("history_daily", [])) + list(daily)
     intervals = payload.get("sleep_intervals", [])
     loads = payload.get("load_history", {})
 
@@ -81,6 +83,19 @@ def render_report(payload):
             row.get("subjective_recovery", "-")))
     if not daily:
         lines.append("| 无数据 | - | - | - | - |")
+
+    lines.extend(["", "## 原始单指标（无阈值、无加权）", "",
+                  "| 指标 | 最新值 | 本周均值 | 前28日均值 | 差值 | 样本 |",
+                  "|---|---:|---:|---:|---:|---:|"])
+    raw_signals = raw_signal_snapshot(all_daily, week["mon"], week["as_of"])
+    for card in raw_signals:
+        lines.append("| %s | %s %s | %s | %s | %s | %d/%d |" % (
+            card["label"], card["latest"], card["unit"], card["week_mean"],
+            card["baseline_28d_mean"] if card["baseline_28d_mean"] is not None else "-",
+            card["delta_vs_baseline"] if card["delta_vs_baseline"] is not None else "-",
+            card["n_week"], card["n_baseline"]))
+    if not raw_signals:
+        lines.append("| 无本周信号 | - | - | - | - | 0/0 |")
 
     lines.extend(["", "## 活动", "", "| 日期 | 类型 | 距离km | 时长min | 平均心率 | EF | Edwards TRIMP |",
                   "|---|---|---:|---:|---:|---:|---:|"])
@@ -118,6 +133,16 @@ def render_report(payload):
     elif current_week_daily is not None:
         lines.append("- 单调性/应变：负荷全零、完全相同或输入不足，不计算")
     lines.append("- 这些负荷指标只描述变化，不提供通用安全区，也不能单独决定增减量。")
+
+    state = multidomain_state(all_daily, week["mon"], week["as_of"])
+    lines.extend(["", "## 多维个人状态（实验）", "",
+                  "| 维度 | 个人相对指数 | 可靠度 | 状态 |", "|---|---:|---:|---|"])
+    for axis in state["axes"]:
+        lines.append("| %s | %s | %s | %s |" % (
+            axis["label"], axis.get("index", "-"), axis.get("reliability", "-"),
+            "可用" if axis.get("available") else "历史不足"))
+    lines.append("- 50 是个人历史中性锚点，不是健康及格线；多轴共享输入，不是独立生理证据。")
+    lines.append("- 本层和变化候选均不得单独触发训练处方或医学判断。")
 
     lines.extend(["", "## 睡眠规律", ""])
     sri = sleep_regularity_sri(intervals) if intervals else None

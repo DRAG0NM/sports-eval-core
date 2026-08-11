@@ -12,6 +12,11 @@ data/
 **/原始数据/
 **/个人档案.md
 **/解析索引.json
+**/教练事件.jsonl
+**/coach_jobs/
+**/coach_metrics.jsonl
+coach_context.json
+coach_response.json
 *.fit
 *.tcx
 *.gpx
@@ -38,4 +43,3 @@ coverage.xml
 Thumbs.db
 *.tmp
 *.bak
-

@@ -1,0 +1,17 @@
+{
+  "name": "sports-eval-core",
+  "version": "0.2.0",
+  "released_on": "2026-08-12",
+  "runtime": "Python 3.9+ standard library",
+  "data_policy": "synthetic_examples_only",
+  "vendor_neutral": true,
+  "features": [
+    "obsidian_weekly_report",
+    "raw_signal_layer",
+    "personal_baseline_and_multidomain_state",
+    "change_candidates",
+    "coach_context_v2",
+    "deterministic_safety_gate",
+    "coach_response_v2_evidence_validation"
+  ]
+}

@@ -1,9 +1,48 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:sports-eval-core:schema:weekly-input:1",
-  "title": "Sports Eval Core weekly input",
+  "title": "Sports Eval Core vendor-neutral weekly input",
   "type": "object",
   "required": ["schema_version", "week"],
+  "$defs": {
+    "dailyRecord": {
+      "type": "object",
+      "required": ["date"],
+      "properties": {
+        "date": {"type": "string", "pattern": "^[0-9]{8}$"},
+        "sleep_duration_min": {"type": "number", "minimum": 0},
+        "sleep_score": {"type": "number"},
+        "sleep_efficiency": {"type": "number", "minimum": 0, "maximum": 100},
+        "hrv_rmssd": {"type": "number", "minimum": 0},
+        "resting_hr": {"type": "number", "minimum": 0},
+        "stress": {"type": "number"},
+        "training_load": {"type": "number", "minimum": 0},
+        "vo2max": {"type": "number", "minimum": 0},
+        "running_ability": {"type": "number"},
+        "subjective_recovery": {"type": "number"}
+      },
+      "additionalProperties": false
+    },
+    "subjectiveEvent": {
+      "type": "object",
+      "required": ["date", "type"],
+      "properties": {
+        "date": {"type": "string", "pattern": "^[0-9]{8}$"},
+        "type": {"enum": ["morning_checkin", "post_workout_feedback", "pain_followup", "weekly_checkin"]},
+        "pain": {"type": "number", "minimum": 0, "maximum": 10},
+        "illness": {"type": "boolean"},
+        "function_limited": {"type": "boolean"},
+        "worsening": {"type": "boolean"},
+        "rpe": {"type": "number", "minimum": 0, "maximum": 10},
+        "subjective_recovery": {"type": "number"},
+        "red_flags": {
+          "type": "array",
+          "items": {"enum": ["chest_pain", "palpitations", "fainting", "joint_deformity", "cannot_bear_weight", "severe_breathing_difficulty"]}
+        }
+      },
+      "additionalProperties": false
+    }
+  },
   "properties": {
     "schema_version": {"const": 1},
     "synthetic": {"type": "boolean"},
@@ -18,21 +57,10 @@
       },
       "additionalProperties": false
     },
-    "daily": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": ["date"],
-        "properties": {
-          "date": {"type": "string", "pattern": "^[0-9]{8}$"},
-          "sleep_duration_min": {"type": "number", "minimum": 0},
-          "sleep_score": {"type": "number"},
-          "resting_hr": {"type": "number", "minimum": 0},
-          "subjective_recovery": {"type": "number"}
-        },
-        "additionalProperties": false
-      }
-    },
+    "history_daily": {"type": "array", "items": {"$ref": "#/$defs/dailyRecord"}},
+    "daily": {"type": "array", "items": {"$ref": "#/$defs/dailyRecord"}},
+    "subjective_events": {"type": "array", "items": {"$ref": "#/$defs/subjectiveEvent"}},
+    "current_plan": {"type": ["string", "null"]},
     "activities": {
       "type": "array",
       "items": {
@@ -44,12 +72,8 @@
           "distance_m": {"type": "number", "minimum": 0},
           "duration_s": {"type": "number", "minimum": 0},
           "avg_hr": {"type": "number", "minimum": 0},
-          "hr_zone_minutes": {
-            "type": "array",
-            "minItems": 5,
-            "maxItems": 5,
-            "items": {"type": "number", "minimum": 0}
-          }
+          "hr_zone_minutes": {"type": "array", "minItems": 5, "maxItems": 5,
+                              "items": {"type": "number", "minimum": 0}}
         },
         "additionalProperties": false
       }
@@ -57,26 +81,17 @@
     "sleep_intervals": {
       "type": "array",
       "items": {
-        "type": "object",
-        "required": ["start", "end"],
-        "properties": {
-          "start": {"type": "string", "format": "date-time"},
-          "end": {"type": "string", "format": "date-time"}
-        },
+        "type": "object", "required": ["start", "end"],
+        "properties": {"start": {"type": "string", "format": "date-time"},
+                       "end": {"type": "string", "format": "date-time"}},
         "additionalProperties": false
       }
     },
-    "load_history": {
-      "type": "object",
-      "patternProperties": {"^[0-9]{8}$": {"type": "number", "minimum": 0}},
-      "additionalProperties": false
-    },
-    "current_week_daily_loads": {
-      "type": "array",
-      "minItems": 7,
-      "maxItems": 7,
-      "items": {"type": "number", "minimum": 0}
-    }
+    "load_history": {"type": "object",
+                     "patternProperties": {"^[0-9]{8}$": {"type": "number", "minimum": 0}},
+                     "additionalProperties": false},
+    "current_week_daily_loads": {"type": "array", "minItems": 7, "maxItems": 7,
+                                 "items": {"type": "number", "minimum": 0}}
   },
   "additionalProperties": false
 }

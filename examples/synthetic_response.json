@@ -1,0 +1,34 @@
+{
+  "kind": "coach_response",
+  "synthetic": true,
+  "schema_version": 2,
+  "task": "daily_guidance",
+  "as_of": "20260811",
+  "data_status": {"complete": false, "missing": [], "note": "合成示例的当前周尚未结束"},
+  "observations": [
+    {
+      "id": "obs_sleep_latest",
+      "statement": "合成数据中最近一晚睡眠时长为 455 分钟。",
+      "confidence": "medium",
+      "evidence": [
+        {"source": "coach_context", "pointer": "/views/raw_signals/0/latest", "layer": "raw_signal", "observed_value": 455.0}
+      ]
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "rec_maintain",
+      "action_type": "maintain",
+      "action": "保持合成计划，不依据单晚睡眠调整训练。",
+      "confidence": "low",
+      "evidence": [
+        {"source": "coach_context", "pointer": "/views/raw_signals/0/latest", "layer": "raw_signal", "observed_value": 455.0}
+      ],
+      "requires_confirmation": false,
+      "changes_plan": false
+    }
+  ],
+  "risks": [{"level": "green", "signal": "合成事件未提供红黄灯信号", "action": "继续观察"}],
+  "questions": [],
+  "limitations": ["这是合成结构示例，不是针对任何真实个人的建议。"]
+}
